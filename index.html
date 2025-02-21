@@ -916,6 +916,36 @@
                 #fa8072 0%,
                 #cd5c5c 100%);
         }
+
+        /* Spacecraft orbit styles */
+        .spacecraft-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px dashed rgba(152, 251, 152, 0.2); /* Pale green orbit */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+
+        /* Earth-orbiting satellite styles */
+        #iss-orbit, #hubble-orbit {
+            border: 1px solid rgba(152, 251, 152, 0.4); /* Brighter green for Earth satellites */
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 1001; /* Above Earth but below spacecraft */
+        }
+
+        #iss, #hubble {
+            width: 6px !important;
+            height: 6px !important;
+            background: radial-gradient(circle at 30% 30%,
+                #e0e0e0 0%,
+                #a0a0a0 60%,
+                #808080 100%) !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -2185,6 +2215,35 @@
                         } else {
                             // Fallback calculations
                             switch(craftId) {
+                                case 'iss':
+                                case 'hubble':
+                                    // Get Earth's position
+                                    const earthContainer = document.getElementById('earth-container');
+                                    const earthTransform = earthContainer ? earthContainer.style.transform : '';
+                                    const earthMatch = earthTransform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
+                                    let earthX = 0, earthY = 0;
+                                    
+                                    if (earthMatch) {
+                                        earthX = parseFloat(earthMatch[1]);
+                                        earthY = parseFloat(earthMatch[2]);
+                                    }
+                                    
+                                    // Calculate satellite position relative to Earth
+                                    const satelliteAngle = (timestamp / (craft.orbitPeriod * 24 * 60 * 60 * 1000) * 360) % 360;
+                                    const satelliteRadius = 20; // Small orbit visible around Earth
+                                    x = earthX + satelliteRadius * Math.cos(satelliteAngle * Math.PI / 180);
+                                    y = earthY + satelliteRadius * Math.sin(satelliteAngle * Math.PI / 180);
+                                    
+                                    // Update orbit to be centered on Earth
+                                    if (orbit) {
+                                        orbit.style.width = `${satelliteRadius * 2}px`;
+                                        orbit.style.height = `${satelliteRadius * 2}px`;
+                                        orbit.style.position = 'absolute';
+                                        orbit.style.left = `${earthX}px`;
+                                        orbit.style.top = `${earthY}px`;
+                                    }
+                                    break;
+
                                 case 'voyager1':
                                 case 'voyager2':
                                 case 'new_horizons':
