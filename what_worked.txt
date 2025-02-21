@@ -16,6 +16,7 @@ Implemented specific sizes for each planet:
 - Venus: 18px
 - Mars: 16px
 - Mercury: 12px
+- Pluto: 10px
 
 3. Style Enforcement:
 - Added `!important` to width and height properties
@@ -69,14 +70,45 @@ Implemented specific sizes for each planet:
 - Dynamic tail rotation based on position relative to sun
 - Proper 3D transforms for perspective view
 
-10. Simultaneous Object Management:
-- Successfully integrated planets, asteroids, and comets in the same visualization
-- Maintained distinct visual styles for each category of object
-- Implemented proper z-index layering across all object types
-- Ensured smooth updates for all celestial bodies
-- Preserved individual object characteristics while updating positions
-- Managed orbital calculations for all objects efficiently
-- Integrated NASA Horizons API data for all supported objects
-- Maintained proper visibility and interaction for all elements
+10. Spacecraft Implementation:
+- Added 10 major spacecraft with accurate positioning:
+  - Voyager 1 & 2 (deep space missions)
+  - James Webb Space Telescope (at L2 point)
+  - International Space Station (Earth orbit)
+  - Hubble Space Telescope (Earth orbit)
+  - Parker Solar Probe (solar orbit)
+  - New Horizons (deep space)
+  - Cassini (historical Saturn position)
+  - Juno (Jupiter orbit)
+  - MAVEN (Mars orbit)
+- Integrated NASA Horizons API for real-time positions
+- Implemented fallback calculations for when API data is unavailable
+- Used pale green text color to distinguish spacecraft names
+- Added dashed orbit lines for artificial satellites
+- Scaled distances appropriately for visualization
+- Implemented proper z-indexing for spacecraft visibility
 
-These changes have resulted in a comprehensive visualization of the solar system, including planets, dwarf planets, major asteroids, and significant comets, all with accurate orbital mechanics and visual distinctions. 
+11. Moon Implementation:
+- Added natural satellites for planets:
+  - Earth's Moon
+  - Mars' Phobos and Deimos
+  - Jupiter's Galilean moons
+  - Saturn's major moons
+  - Uranus' largest moons
+  - Neptune's Triton
+- Used silver-blue color (#b0c4de) for moon names
+- Implemented proper orbital mechanics for each moon
+- Scaled sizes and distances for visibility
+- Added hover effects and name labels
+- Ensured proper z-indexing relative to parent planets
+
+12. Pluto Restoration:
+- Restored Pluto with proper orbital characteristics
+- Implemented 1400px orbit width
+- Added brown gradient coloring
+- Ensured visibility with proper z-indexing (18)
+- Added hover effects and name label
+- Integrated with NASA Horizons API for position updates
+- Implemented fallback calculations using accurate orbital period
+
+These changes have resulted in a comprehensive visualization of the solar system, including planets, dwarf planets, major asteroids, significant comets, spacecraft, and natural satellites, all with accurate orbital mechanics and visual distinctions. 
