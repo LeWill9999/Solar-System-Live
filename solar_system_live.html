@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#000000">
     <title>Solar System - Real-time View</title>
     <style>
+        /* Mobile-friendly styles */
+        @media (max-width: 768px) {
+            body {
+                perspective: 1000px;
+            }
+            
+            .solar-system {
+                transform: rotateX(60deg) rotateZ(45deg) scale(0.4);
+            }
+
+            .planet-name, .asteroid-name, .comet-name, .satellite-name, .spacecraft-name {
+                font-size: 14px !important;
+            }
+
+            /* Add touch-friendly hover states */
+            .planet:active,
+            .asteroid:active,
+            .comet:active,
+            .satellite:active,
+            .spacecraft:active {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            /* Adjust datetime display for mobile */
+            .datetime-display {
+                font-size: 14px;
+                padding: 5px;
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        /* Add pinch-zoom support */
+        @media (hover: none) {
+            body {
+                touch-action: manipulation;
+            }
+            
+            .solar-system {
+                transition: transform 0.3s ease;
+            }
+        }
+
         body {
             margin: 0;
             height: 100vh;
