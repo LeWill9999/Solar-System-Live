@@ -1,6 +1,109 @@
-# Solar System Live Visualization
+# Solar System Live
 
-A real-time, interactive visualization of our solar system, including planets, major asteroids, and comets. The visualization uses NASA's HORIZONS API for accurate celestial body positions and orbital calculations.
+A real-time, interactive visualization of our solar system, including planets, dwarf planets, major asteroids, comets, spacecraft, and natural satellites. The visualization uses NASA's HORIZONS API for accurate celestial body positions and orbital calculations.
+
+## 🌟 Features
+
+### Celestial Bodies
+- All planets including Pluto (restored as requested!)
+- Major moons of planets:
+  - Earth's Moon
+  - Mars' Phobos and Deimos
+  - Jupiter's Galilean moons (Io, Europa, Ganymede, Callisto)
+  - Saturn's major moons (Titan, Rhea, Iapetus)
+  - Uranus' largest moons (Titania, Oberon, Miranda)
+  - Neptune's Triton
+
+### Asteroid Belt
+Major asteroids between Mars and Jupiter:
+- Ceres (dwarf planet)
+- Vesta
+- Pallas
+- Hygiea
+- Interamnia
+- Europa (52)
+- Davida
+- Sylvia
+- Cybele
+- Eunomia
+
+### Comets
+Notable comets with dynamic tails:
+- Halley's Comet
+- Hale-Bopp
+- Encke
+- Tempel 1
+- Wild 2
+- Churyumov-Gerasimenko
+- Swift-Tuttle
+- Borrelly
+- Giacobini-Zinner
+- Hartley 2
+
+### Spacecraft & Artificial Satellites
+Real-time tracking of major space missions:
+- Deep Space Missions:
+  - Voyager 1
+  - Voyager 2
+  - New Horizons
+- Space Telescopes:
+  - James Webb Space Telescope (at L2 point)
+  - Hubble Space Telescope
+- Earth-Orbiting:
+  - International Space Station (ISS)
+- Solar System Explorers:
+  - Parker Solar Probe
+  - Juno (Jupiter)
+  - MAVEN (Mars)
+  - Cassini (Historical Saturn position)
+
+## 🚀 Technical Features
+- Real-time position updates using NASA HORIZONS API
+- Fallback calculations for when API data is unavailable
+- Accurate orbital mechanics and scaling
+- Interactive 3D grid system
+- Mobile-responsive design
+- Distinctive visual styles for different object types:
+  - Planets with unique gradients and shadows
+  - Asteroids with rocky textures
+  - Comets with dynamic glowing tails
+  - Spacecraft with metallic appearance
+  - Moons with appropriate size scaling
+
+## 🎯 Development Process
+This project was developed using an innovative "vibe coding" approach, leveraging several AI tools:
+
+### AI Assistance
+- **Cursor AI**: Primary development environment using:
+  - Claude 3.5 Sonnet for code generation and problem-solving
+  - Composer for complex feature integration
+- **Audio-to-Text Tools**:
+  - SuperWhisper: Voice command transcription
+  - Wispr Flow: Natural language processing for development flow
+
+This approach allowed for a more natural and intuitive development process, combining traditional coding with AI-assisted development and voice-based programming.
+
+## 🌐 Access
+Visit [https://LeWill9999.github.io/Solar-System-Live/](https://LeWill9999.github.io/Solar-System-Live/) to view the live visualization.
+
+## 📱 Compatibility
+- Works on desktop and mobile browsers
+- Touch-friendly controls for mobile devices
+- Responsive design adapts to screen size
+
+## 🔄 Updates
+The visualization updates every 5 seconds with new position data, ensuring accurate representation of our dynamic solar system.
+
+## 🎨 Visual Design
+- Unique color schemes for different object types
+- Dynamic lighting and shadow effects
+- Intuitive size scaling for visibility
+- Clear labeling system with hover effects
+- Distinctive orbit styles for different object categories
+
+---
+
+*This project demonstrates the potential of combining traditional astronomical data with modern web technologies and AI-assisted development to create an engaging educational tool.*
 
 ## Tracked Objects
 
@@ -109,11 +212,52 @@ Solar-System-Live/
 ## Version History
 
 - v1.0.0: Initial release with basic solar system visualization
-- Future versions will include:
-  - Enhanced zoom functionality
-  - Detailed information panels
-  - Time controls for historical/future positions
-  - Additional celestial objects
+- v2.0.0: Current version with comprehensive celestial object tracking
+
+## 🚀 Upcoming Features
+
+### 3D Visualization Enhancement
+- Full 3D rendering of all celestial bodies
+- Interactive camera controls for:
+  - Free orbit around the solar system
+  - Following specific objects
+  - Viewing from any object's perspective
+- Realistic 3D models for:
+  - Spacecraft with accurate geometries
+  - Planet surface features
+  - Asteroid shapes
+  - Comet nucleus details
+
+### Advanced Interaction
+- Object selection and focus mode
+- Detailed information panels with real-time data
+- Time controls for:
+  - Historical positions
+  - Future predictions
+  - Time acceleration/deceleration
+- Distance measurements between objects
+
+### Visual Improvements
+- Enhanced lighting effects
+- Realistic shadow casting
+- Improved texture mapping
+- Atmospheric effects for planets
+- More detailed comet tail physics
+- Asteroid belt density visualization
+
+### Educational Features
+- Guided tours of the solar system
+- Historical space mission paths
+- Educational overlays and annotations
+- Astronomical event predictions
+- Integration with educational resources
+
+### Technical Enhancements
+- WebGL implementation for better performance
+- Improved mobile controls
+- VR/AR support
+- Offline mode capabilities
+- Enhanced API integration
 
 ## Contributing
 
