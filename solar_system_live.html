@@ -30,31 +30,63 @@
             z-index: 1000;
         }
 
+        /* 3D Grid System */
+        .grid-container {
+            position: absolute;
+            width: 1400px;
+            height: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* X-axis grid lines (vertical lines) */
+        .grid-x {
+            width: 1px;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Y-axis grid lines (horizontal lines) */
+        .grid-y {
+            width: 100%;
+            height: 1px;
+            transform-style: preserve-3d;
+        }
+
+        /* Z-axis grid lines (depth lines) */
+        .grid-z {
+            width: 1px;
+            height: 1px;
+            transform-style: preserve-3d;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Axis labels */
+        .axis-label {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
         .solar-system {
             position: relative;
             width: 1400px;
             height: 1000px;
-            transform: rotateX(55deg) rotateZ(-30deg);
+            transform: rotateX(60deg) rotateZ(45deg);
             transform-style: preserve-3d;
             transform-origin: center center;
-            perspective: 2000px;
-        }
-
-        .stars {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            opacity: 0.3;
         }
 
         .sun {
@@ -85,32 +117,37 @@
             pointer-events: none;
         }
 
-        .planet-container, .comet-container, .asteroid-container {
+        .planet-container {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform-origin: center center;
+            transform-origin: 50% 50%;
             transform-style: preserve-3d;
-            backface-visibility: hidden;
             display: block !important;
             visibility: visible !important;
             pointer-events: auto;
+            z-index: 10;
+            width: 0;
+            height: 0;
         }
 
-        .planet, .comet, .asteroid {
+        .planet {
             position: absolute;
-            transform-style: preserve-3d;
             transform: translate(-50%, -50%);
             cursor: pointer;
             transition: all 0.3s ease;
             will-change: transform;
-            backface-visibility: hidden;
             display: block !important;
             visibility: visible !important;
             border-radius: 50% !important;
+            z-index: inherit;
+            pointer-events: auto;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            opacity: 1 !important;
+            background-color: currentColor !important;
         }
 
-        .planet-name, .comet-name, .asteroid-name, .satellite-name {
+        .planet-name {
             position: absolute;
             color: #fff;
             white-space: nowrap;
@@ -120,92 +157,27 @@
             border-radius: 3px;
             pointer-events: none;
             transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            z-index: 1000;
-            transform: rotateX(-55deg) translateY(-25px) translateX(-50%);
+            transform: translateY(-35px) translateX(-50%);
             left: 50%;
             top: 100%;
-            backface-visibility: hidden;
-        }
-
-        .planet-name {
-            font-size: 12px;
-        }
-
-        .comet-name {
-            font-size: 8px;
-            transform: rotateX(-55deg) translateY(-40px) translateX(-50%);
-        }
-
-        .asteroid-name {
-            font-size: 8px;
-            transform: rotateX(-55deg) translateY(-30px) translateX(-50%);
+            z-index: 1000;
         }
 
         .planet:hover .planet-name {
-            transform: rotateX(-55deg) translateY(-35px) translateX(-50%);
+            transform: translateY(-35px) translateX(-50%);
             font-size: 16px;
             background: rgba(0, 0, 0, 0.9);
         }
 
-        .comet:hover .comet-name {
-            transform: rotateX(-55deg) translateY(-50px) translateX(-50%);
-            font-size: 12px;
-        }
-
-        .asteroid:hover .asteroid-name {
-            transform: rotateX(-55deg) translateY(-40px) translateX(-50%);
-            font-size: 12px;
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        /* Adjust specific object names to prevent overlap */
-        #pluto .planet-name {
-            transform: rotateX(-55deg) translateY(-65px) translateX(-50%);
-            z-index: 1001;
-        }
-
-        #hale-bopp .comet-name {
-            transform: rotateX(-55deg) translateY(-80px) translateX(-50%);
-            z-index: 1001;
-        }
-
-        #europa-asteroid .asteroid-name {
-            transform: rotateX(-55deg) translateY(-50px) translateX(-50%);
-            z-index: 1001;
-        }
-
-        /* Improve visibility of objects */
-        .planet, .comet, .asteroid {
-            position: absolute;
-            transform-style: preserve-3d;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            will-change: transform;
-            backface-visibility: hidden;
-            z-index: 5;
-        }
-
-        /* Ensure proper stacking of objects */
-        .sun { z-index: 1; }
-        .planet-container { 
-            z-index: 2;
-            display: block !important; /* Force display */
-            visibility: visible !important; /* Ensure visibility */
-        }
-        .comet-container { z-index: 3; }
-        .asteroid-container { z-index: 4; }
-
         /* Mercury */
         #mercury-orbit { width: 160px; height: 160px; }
         #mercury {
-            width: 12px;
-            height: 12px;
+            width: 12px !important;
+            height: 12px !important;
             background: radial-gradient(circle at 30% 30%,
                 #ffd700 0%,
                 #a67f59 60%,
-                #806040 100%);
+                #806040 100%) !important;
             box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
                         inset 2px 2px 4px rgba(255,255,255,0.3),
                         0 0 20px rgba(255,255,255,0.4);
@@ -218,12 +190,12 @@
         /* Venus */
         #venus-orbit { width: 240px; height: 240px; }
         #venus {
-            width: 18px;
-            height: 18px;
+            width: 18px !important;
+            height: 18px !important;
             background: radial-gradient(circle at 30% 30%,
                 #ffd700 0%,
                 #e6b87c 60%,
-                #c69c6d 100%);
+                #c69c6d 100%) !important;
             box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5),
                         inset 3px 3px 6px rgba(255,255,255,0.3),
                         0 0 25px rgba(255,255,255,0.4);
@@ -236,12 +208,12 @@
         /* Earth */
         #earth-orbit { width: 320px; height: 320px; }
         #earth {
-            width: 20px;
-            height: 20px;
+            width: 20px !important;
+            height: 20px !important;
             background: radial-gradient(circle at 30% 30%,
                 #50C878 0%,
                 #4B90DD 60%,
-                #2a5080 100%);
+                #2a5080 100%) !important;
             box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5),
                         inset 3px 3px 6px rgba(255,255,255,0.3),
                         0 0 25px rgba(73, 151, 208, 0.5);
@@ -254,12 +226,12 @@
         /* Mars */
         #mars-orbit { width: 440px; height: 440px; }
         #mars {
-            width: 16px;
-            height: 16px;
+            width: 16px !important;
+            height: 16px !important;
             background: radial-gradient(circle at 30% 30%,
                 #ff6b6b 0%,
                 #c1440e 60%,
-                #8b3209 100%);
+                #8b3209 100%) !important;
             box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5),
                         inset 3px 3px 6px rgba(255,255,255,0.3),
                         0 0 25px rgba(193, 68, 14, 0.5);
@@ -272,12 +244,12 @@
         /* Jupiter */
         #jupiter-orbit { width: 640px; height: 640px; }
         #jupiter {
-            width: 40px;
-            height: 40px;
+            width: 40px !important;
+            height: 40px !important;
             background: radial-gradient(circle at 30% 30%,
                 #e4c19c 0%,
                 #c3a992 60%,
-                #9a8472 100%);
+                #9a8472 100%) !important;
             box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5),
                         inset 5px 5px 10px rgba(255,255,255,0.3),
                         0 0 30px rgba(195, 169, 146, 0.5);
@@ -290,12 +262,12 @@
         /* Saturn */
         #saturn-orbit { width: 800px; height: 800px; }
         #saturn {
-            width: 35px;
-            height: 35px;
+            width: 35px !important;
+            height: 35px !important;
             background: radial-gradient(circle at 30% 30%,
                 #ffd700 0%,
                 #ffa500 60%,
-                #cc8400 100%);
+                #cc8400 100%) !important;
             box-shadow: inset -4px -4px 8px rgba(0,0,0,0.5),
                         inset 4px 4px 8px rgba(255,255,255,0.3),
                         0 0 30px rgba(255, 215, 0, 0.5);
@@ -324,12 +296,12 @@
         /* Uranus */
         #uranus-orbit { width: 960px; height: 960px; }
         #uranus {
-            width: 26px;
-            height: 26px;
+            width: 26px !important;
+            height: 26px !important;
             background: radial-gradient(circle at 30% 30%,
                 #00ced1 0%,
                 #b2ffff 60%,
-                #89cccc 100%);
+                #89cccc 100%) !important;
             box-shadow: inset -4px -4px 8px rgba(0,0,0,0.5),
                         inset 4px 4px 8px rgba(255,255,255,0.3),
                         0 0 25px rgba(0, 206, 209, 0.5);
@@ -342,18 +314,36 @@
         /* Neptune */
         #neptune-orbit { width: 1120px; height: 1120px; }
         #neptune {
-            width: 25px;
-            height: 25px;
+            width: 25px !important;
+            height: 25px !important;
             background: radial-gradient(circle at 30% 30%,
                 #00bfff 0%,
                 #4169e1 60%,
-                #2a4594 100%);
+                #2a4594 100%) !important;
             box-shadow: inset -4px -4px 8px rgba(0,0,0,0.5),
                         inset 4px 4px 8px rgba(255,255,255,0.3),
                         0 0 25px rgba(65, 105, 225, 0.5);
             display: block !important;
             visibility: visible !important;
             z-index: 17 !important;
+            border-radius: 50% !important;
+        }
+
+        /* Pluto */
+        #pluto-orbit { width: 1400px; height: 1400px; }
+        #pluto {
+            width: 10px !important;
+            height: 10px !important;
+            background: radial-gradient(circle at 30% 30%,
+                #deb887 0%,
+                #8b7355 60%,
+                #6b4423 100%) !important;
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
+                        inset 2px 2px 4px rgba(255,255,255,0.3),
+                        0 0 20px rgba(222, 184, 135, 0.4);
+            display: block !important;
+            visibility: visible !important;
+            z-index: 18 !important;
             border-radius: 50% !important;
         }
 
@@ -378,187 +368,6 @@
         .planet-container#saturn-container { --orbit-width: 800px; }
         .planet-container#uranus-container { --orbit-width: 960px; }
         .planet-container#neptune-container { --orbit-width: 1120px; }
-
-        /* Add satellite styles */
-        .satellite-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0 0;
-            z-index: 4;
-        }
-
-        .satellite {
-            position: absolute;
-            border-radius: 50%;
-            box-shadow: -4px -4px 8px rgba(0,0,0,0.8) inset,
-                        0 0 25px rgba(255,255,255,0.3);
-            transform-style: preserve-3d;
-            transform: translate(-50%, -50%);
-        }
-
-        .satellite-name {
-            position: absolute;
-            color: #fff;
-            font-size: 10px;
-            white-space: nowrap;
-            transform: rotateX(-55deg) translateY(-20px) translateX(-50%);
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 4px;
-            border-radius: 3px;
-            z-index: 1000;
-            left: 50%;
-            top: 100%;
-        }
-
-        /* Moon */
-        #moon {
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(45deg, #808080, #C0C0C0);
-            box-shadow: 0 0 15px rgba(255,255,255,0.6);
-            z-index: 5;
-        }
-
-        /* Jupiter's major moons */
-        .jupiter-moon {
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(45deg, #D3D3D3, #F5F5F5);
-            box-shadow: 0 0 12px rgba(255,255,255,0.5);
-            z-index: 5;
-        }
-
-        /* Saturn's major moons */
-        .saturn-moon {
-            width: 7px;
-            height: 7px;
-            background: linear-gradient(45deg, #E8E8E8, #F8F8F8);
-            box-shadow: 0 0 12px rgba(255,255,255,0.5);
-            z-index: 5;
-        }
-
-        /* Satellite orbits */
-        .satellite-orbit {
-            position: absolute;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-
-        /* Moon's orbit around Earth */
-        #moon-orbit {
-            width: 50px;
-            height: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Jupiter's moons' orbits */
-        #io-orbit { 
-            width: 80px; 
-            height: 80px; 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-        #europa-orbit { 
-            width: 100px; 
-            height: 100px; 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-        #ganymede-orbit { 
-            width: 120px; 
-            height: 120px; 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-        #callisto-orbit { 
-            width: 140px; 
-            height: 140px; 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        /* Saturn's moon orbit */
-        #titan-orbit { 
-            width: 110px; 
-            height: 110px; 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .satellite-container {
-            position: absolute;
-            transform-origin: 50% 50%;
-            z-index: 4;
-        }
-
-        /* Pluto */
-        #pluto-orbit { width: 1400px; height: 1400px; }
-        #pluto {
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle at 30% 30%,
-                #A0522D 0%,
-                #8B7355 60%,
-                #6b5842 100%);
-            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
-                        inset 2px 2px 4px rgba(255,255,255,0.3),
-                        0 0 20px rgba(139, 115, 85, 0.5);
-            display: block !important;
-            visibility: visible !important;
-            z-index: 18 !important;
-            border-radius: 50% !important;
-        }
-
-        /* Asteroid styles */
-        .asteroid-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-
-        .asteroid {
-            border-radius: 50%;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(45deg, #8B8989, #A8A8A8);
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        /* Comet styles */
-        .comet-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 1px dotted rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-
-        .comet {
-            width: 3px;
-            height: 3px;
-            background: linear-gradient(45deg, #E6E6FA, #FFFFFF);
-            box-shadow: 
-                0 0 15px rgba(255,255,255,0.4),
-                -5px 0 10px rgba(173,216,230,0.3);
-            border-radius: 50%;
-        }
-
-        .comet-tail {
-            position: absolute;
-            width: 15px;
-            height: 2px;
-            background: linear-gradient(to left, rgba(255,255,255,0.4), transparent);
-            transform-origin: right center;
-            right: 50%;
-            top: 50%;
-        }
-
-        /* Orbit widths for new objects */
         .planet-container#pluto-container { --orbit-width: 1400px; }
 
         /* Remove zoom-related styles */
@@ -575,14 +384,8 @@
                         0 0 40px rgba(255,255,255,0.6);
         }
 
-        /* Adjust Europa asteroid orbit */
-        #europa-asteroid-orbit {
-            width: 480px !important;
-            height: 480px !important;
-        }
-
         /* Ensure names are always visible */
-        .planet-name, .asteroid-name, .comet-name, .satellite-name {
+        .planet-name {
             z-index: 1000 !important;
             background: rgba(0, 0, 0, 0.8) !important;
             padding: 4px 8px !important;
@@ -591,20 +394,173 @@
             font-weight: bold !important;
         }
 
-        /* Improve satellite visibility */
-        .satellite-container {
-            z-index: inherit !important;
-        }
-
-        .satellite {
-            z-index: inherit !important;
+        /* Asteroid styles */
+        .asteroid {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            will-change: transform;
             display: block !important;
             visibility: visible !important;
+            border-radius: 50% !important;
+            z-index: inherit;
+            pointer-events: auto;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            opacity: 1 !important;
+            background: radial-gradient(circle at 30% 30%,
+                #8B7355 0%,
+                #6B4423 60%,
+                #483C32 100%) !important;
         }
 
-        /* Ensure proper perspective for names */
-        .planet-name, .asteroid-name, .comet-name {
-            transform: rotateX(-55deg) translateY(-30px) translateX(-50%) !important;
+        .asteroid-name {
+            position: absolute;
+            color: #ffd700;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2px 6px;
+            border-radius: 3px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            transform: translateY(-25px) translateX(-50%);
+            left: 50%;
+            top: 100%;
+            z-index: 1000;
+            font-size: 12px;
+        }
+
+        .asteroid:hover .asteroid-name {
+            transform: translateY(-30px) translateX(-50%);
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Individual asteroid sizes */
+        #ceres { width: 14px; height: 14px; }
+        #vesta { width: 12px; height: 12px; }
+        #pallas { width: 11px; height: 11px; }
+        #hygiea { width: 10px; height: 10px; }
+        #interamnia { width: 9px; height: 9px; }
+        #europa { width: 9px; height: 9px; }
+        #davida { width: 8px; height: 8px; }
+        #sylvia { width: 8px; height: 8px; }
+        #cybele { width: 8px; height: 8px; }
+        #eunomia { width: 8px; height: 8px; }
+
+        /* Asteroid orbit styles */
+        .asteroid-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Update planet containers for 3D */
+        .planet-container {
+            transform-style: preserve-3d;
+        }
+
+        .planet, .asteroid {
+            transform-style: preserve-3d;
+        }
+
+        /* Orbit styles update for 3D */
+        .orbit, .asteroid-orbit {
+            transform-style: preserve-3d;
+        }
+
+        /* Comet styles */
+        .comet {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            will-change: transform;
+            display: block !important;
+            visibility: visible !important;
+            border-radius: 50% !important;
+            z-index: inherit;
+            pointer-events: auto;
+            opacity: 1 !important;
+        }
+
+        .comet-head {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%,
+                #fff 0%,
+                #a5f2f3 40%,
+                #60a6a8 100%) !important;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(165, 242, 243, 0.6);
+        }
+
+        .comet-tail {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to left, 
+                rgba(165, 242, 243, 0.8) 0%,
+                rgba(165, 242, 243, 0.4) 50%,
+                rgba(165, 242, 243, 0) 100%);
+            transform-origin: left center;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .comet-name {
+            position: absolute;
+            color: #a5f2f3;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2px 6px;
+            border-radius: 3px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            transform: translateY(-25px) translateX(-50%);
+            left: 50%;
+            top: 100%;
+            z-index: 1000;
+            font-size: 12px;
+        }
+
+        .comet:hover .comet-name {
+            transform: translateY(-30px) translateX(-50%);
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Individual comet sizes */
+        #halley { width: 16px; height: 16px; }
+        #hale-bopp { width: 15px; height: 15px; }
+        #encke { width: 14px; height: 14px; }
+        #tempel1 { width: 13px; height: 13px; }
+        #wild2 { width: 12px; height: 12px; }
+        #churyumov { width: 12px; height: 12px; }
+        #swift-tuttle { width: 11px; height: 11px; }
+        #borrelly { width: 11px; height: 11px; }
+        #giacobini { width: 10px; height: 10px; }
+        #hartley2 { width: 10px; height: 10px; }
+
+        /* Comet orbit styles */
+        .comet-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px dotted rgba(165, 242, 243, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -613,9 +569,12 @@
         <div id="current-date"></div>
         <div id="current-time"></div>
     </div>
+
+    <div class="grid-container">
+        <!-- Grid will be generated by JavaScript -->
+    </div>
     
     <div class="solar-system">
-        <div class="stars"></div>
         <div class="sun"></div>
 
         <div class="orbit" id="mercury-orbit"></div>
@@ -637,12 +596,6 @@
             <div class="planet" id="earth">
                 <div class="planet-name">Earth</div>
             </div>
-            <div class="satellite-orbit" id="moon-orbit"></div>
-            <div class="satellite-container" id="moon-container">
-                <div class="satellite" id="moon">
-                    <div class="satellite-name">Moon</div>
-                </div>
-            </div>
         </div>
 
         <div class="orbit" id="mars-orbit"></div>
@@ -657,30 +610,6 @@
             <div class="planet" id="jupiter">
                 <div class="planet-name">Jupiter</div>
             </div>
-            <div class="satellite-orbit" id="io-orbit"></div>
-            <div class="satellite-container" id="io-container">
-                <div class="satellite jupiter-moon" id="io">
-                    <div class="satellite-name">Io</div>
-                </div>
-            </div>
-            <div class="satellite-orbit" id="europa-orbit"></div>
-            <div class="satellite-container" id="europa-container">
-                <div class="satellite jupiter-moon" id="europa">
-                    <div class="satellite-name">Europa</div>
-                </div>
-            </div>
-            <div class="satellite-orbit" id="ganymede-orbit"></div>
-            <div class="satellite-container" id="ganymede-container">
-                <div class="satellite jupiter-moon" id="ganymede">
-                    <div class="satellite-name">Ganymede</div>
-                </div>
-            </div>
-            <div class="satellite-orbit" id="callisto-orbit"></div>
-            <div class="satellite-container" id="callisto-container">
-                <div class="satellite jupiter-moon" id="callisto">
-                    <div class="satellite-name">Callisto</div>
-                </div>
-            </div>
         </div>
 
         <div class="orbit" id="saturn-orbit"></div>
@@ -688,12 +617,6 @@
             <div class="planet" id="saturn">
                 <div class="saturn-rings"></div>
                 <div class="planet-name">Saturn</div>
-            </div>
-            <div class="satellite-orbit" id="titan-orbit"></div>
-            <div class="satellite-container" id="titan-container">
-                <div class="satellite saturn-moon" id="titan">
-                    <div class="satellite-name">Titan</div>
-                </div>
             </div>
         </div>
 
@@ -718,156 +641,166 @@
             </div>
         </div>
 
-        <!-- Major Asteroids -->
-        <div class="asteroid-orbit" id="ceres-orbit" style="width: 500px; height: 500px;"></div>
-        <div class="asteroid-container" id="ceres-container">
-            <div class="asteroid" id="ceres" style="width: 6px; height: 6px;">
+        <!-- Asteroids -->
+        <div class="asteroid-orbit" id="ceres-orbit"></div>
+        <div class="planet-container" id="ceres-container">
+            <div class="asteroid" id="ceres">
                 <div class="asteroid-name">Ceres</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="vesta-orbit" style="width: 480px; height: 480px;"></div>
-        <div class="asteroid-container" id="vesta-container">
+        <div class="asteroid-orbit" id="vesta-orbit"></div>
+        <div class="planet-container" id="vesta-container">
             <div class="asteroid" id="vesta">
                 <div class="asteroid-name">Vesta</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="pallas-orbit" style="width: 510px; height: 510px;"></div>
-        <div class="asteroid-container" id="pallas-container">
+        <div class="asteroid-orbit" id="pallas-orbit"></div>
+        <div class="planet-container" id="pallas-container">
             <div class="asteroid" id="pallas">
                 <div class="asteroid-name">Pallas</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="hygiea-orbit" style="width: 540px; height: 540px;"></div>
-        <div class="asteroid-container" id="hygiea-container">
+        <div class="asteroid-orbit" id="hygiea-orbit"></div>
+        <div class="planet-container" id="hygiea-container">
             <div class="asteroid" id="hygiea">
                 <div class="asteroid-name">Hygiea</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="euphrosyne-orbit" style="width: 520px; height: 520px;"></div>
-        <div class="asteroid-container" id="euphrosyne-container">
-            <div class="asteroid" id="euphrosyne">
-                <div class="asteroid-name">Euphrosyne</div>
+        <div class="asteroid-orbit" id="interamnia-orbit"></div>
+        <div class="planet-container" id="interamnia-container">
+            <div class="asteroid" id="interamnia">
+                <div class="asteroid-name">Interamnia</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="psyche-orbit" style="width: 490px; height: 490px;"></div>
-        <div class="asteroid-container" id="psyche-container">
-            <div class="asteroid" id="psyche">
-                <div class="asteroid-name">Psyche</div>
-            </div>
-        </div>
-
-        <div class="asteroid-orbit" id="europa-asteroid-orbit" style="width: 480px !important; height: 480px !important;"></div>
-        <div class="asteroid-container" id="europa-asteroid-container">
-            <div class="asteroid" id="europa-asteroid">
+        <div class="asteroid-orbit" id="europa-orbit"></div>
+        <div class="planet-container" id="europa-container">
+            <div class="asteroid" id="europa">
                 <div class="asteroid-name">Europa</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="cybele-orbit" style="width: 550px; height: 550px;"></div>
-        <div class="asteroid-container" id="cybele-container">
+        <div class="asteroid-orbit" id="davida-orbit"></div>
+        <div class="planet-container" id="davida-container">
+            <div class="asteroid" id="davida">
+                <div class="asteroid-name">Davida</div>
+            </div>
+        </div>
+
+        <div class="asteroid-orbit" id="sylvia-orbit"></div>
+        <div class="planet-container" id="sylvia-container">
+            <div class="asteroid" id="sylvia">
+                <div class="asteroid-name">Sylvia</div>
+            </div>
+        </div>
+
+        <div class="asteroid-orbit" id="cybele-orbit"></div>
+        <div class="planet-container" id="cybele-container">
             <div class="asteroid" id="cybele">
                 <div class="asteroid-name">Cybele</div>
             </div>
         </div>
 
-        <div class="asteroid-orbit" id="eunomia-orbit" style="width: 470px; height: 470px;"></div>
-        <div class="asteroid-container" id="eunomia-container">
+        <div class="asteroid-orbit" id="eunomia-orbit"></div>
+        <div class="planet-container" id="eunomia-container">
             <div class="asteroid" id="eunomia">
                 <div class="asteroid-name">Eunomia</div>
             </div>
         </div>
+    </div>
 
-        <div class="asteroid-orbit" id="juno-orbit" style="width: 460px; height: 460px;"></div>
-        <div class="asteroid-container" id="juno-container">
-            <div class="asteroid" id="juno">
-                <div class="asteroid-name">Juno</div>
-            </div>
+    <!-- Comets -->
+    <div class="comet-orbit" id="halley-orbit"></div>
+    <div class="planet-container" id="halley-container">
+        <div class="comet" id="halley">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Halley</div>
         </div>
+    </div>
 
-        <!-- Major Comets -->
-        <div class="comet-orbit" id="halley-orbit" style="width: 1600px; height: 1600px;"></div>
-        <div class="comet-container" id="halley-container">
-            <div class="comet" id="halley">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Halley</div>
-            </div>
+    <div class="comet-orbit" id="hale-bopp-orbit"></div>
+    <div class="planet-container" id="hale-bopp-container">
+        <div class="comet" id="hale-bopp">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Hale-Bopp</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="hale-bopp-orbit" style="width: 2000px; height: 2000px;"></div>
-        <div class="comet-container" id="hale-bopp-container">
-            <div class="comet" id="hale-bopp">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Hale-Bopp</div>
-            </div>
+    <div class="comet-orbit" id="encke-orbit"></div>
+    <div class="planet-container" id="encke-container">
+        <div class="comet" id="encke">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Encke</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="encke-orbit" style="width: 800px; height: 800px;"></div>
-        <div class="comet-container" id="encke-container">
-            <div class="comet" id="encke">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Encke</div>
-            </div>
+    <div class="comet-orbit" id="tempel1-orbit"></div>
+    <div class="planet-container" id="tempel1-container">
+        <div class="comet" id="tempel1">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Tempel 1</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="tempel1-orbit" style="width: 1000px; height: 1000px;"></div>
-        <div class="comet-container" id="tempel1-container">
-            <div class="comet" id="tempel1">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Tempel 1</div>
-            </div>
+    <div class="comet-orbit" id="wild2-orbit"></div>
+    <div class="planet-container" id="wild2-container">
+        <div class="comet" id="wild2">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Wild 2</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="churyumov-orbit" style="width: 1200px; height: 1200px;"></div>
-        <div class="comet-container" id="churyumov-container">
-            <div class="comet" id="churyumov">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Churyumov-Gerasimenko</div>
-            </div>
+    <div class="comet-orbit" id="churyumov-orbit"></div>
+    <div class="planet-container" id="churyumov-container">
+        <div class="comet" id="churyumov">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Churyumov-Gerasimenko</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="wild2-orbit" style="width: 900px; height: 900px;"></div>
-        <div class="comet-container" id="wild2-container">
-            <div class="comet" id="wild2">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Wild 2</div>
-            </div>
+    <div class="comet-orbit" id="swift-tuttle-orbit"></div>
+    <div class="planet-container" id="swift-tuttle-container">
+        <div class="comet" id="swift-tuttle">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Swift-Tuttle</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="hyakutake-orbit" style="width: 1800px; height: 1800px;"></div>
-        <div class="comet-container" id="hyakutake-container">
-            <div class="comet" id="hyakutake">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Hyakutake</div>
-            </div>
+    <div class="comet-orbit" id="borrelly-orbit"></div>
+    <div class="planet-container" id="borrelly-container">
+        <div class="comet" id="borrelly">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Borrelly</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="mcnaught-orbit" style="width: 2200px; height: 2200px;"></div>
-        <div class="comet-container" id="mcnaught-container">
-            <div class="comet" id="mcnaught">
-                <div class="comet-tail"></div>
-                <div class="comet-name">McNaught</div>
-            </div>
+    <div class="comet-orbit" id="giacobini-orbit"></div>
+    <div class="planet-container" id="giacobini-container">
+        <div class="comet" id="giacobini">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Giacobini-Zinner</div>
         </div>
+    </div>
 
-        <div class="comet-orbit" id="lovejoy-orbit" style="width: 1900px; height: 1900px;"></div>
-        <div class="comet-container" id="lovejoy-container">
-            <div class="comet" id="lovejoy">
-                <div class="comet-tail"></div>
-                <div class="comet-name">Lovejoy</div>
-            </div>
-        </div>
-
-        <div class="comet-orbit" id="neowise-orbit" style="width: 1700px; height: 1700px;"></div>
-        <div class="comet-container" id="neowise-container">
-            <div class="comet" id="neowise">
-                <div class="comet-tail"></div>
-                <div class="comet-name">NEOWISE</div>
-            </div>
+    <div class="comet-orbit" id="hartley2-orbit"></div>
+    <div class="planet-container" id="hartley2-container">
+        <div class="comet" id="hartley2">
+            <div class="comet-head"></div>
+            <div class="comet-tail"></div>
+            <div class="comet-name">Hartley 2</div>
         </div>
     </div>
 
@@ -898,8 +831,7 @@
             saturn: 10759.22,
             uranus: 30688.5,
             neptune: 60195,
-            pluto: 90560,    // Pluto's orbital period in Earth days
-            hale_bopp: 2537.07 * 365.25  // Hale-Bopp period in Earth days
+            pluto: 90560    // Pluto's orbital period in Earth days
         };
 
         // Updated mean longitude and ascending node for Feb 2025
@@ -912,8 +844,7 @@
             saturn: 50.08 + 45.8,    // Adjusted for current position
             uranus: 314.05 + 68.2,   // Adjusted for current position
             neptune: 304.35 + 37.1,   // Adjusted for current position
-            pluto: 238.92 + 14.07,  // Adjusted for current position
-            hale_bopp: 238.92 + 14.07  // Adjusted for current position
+            pluto: 238.92 + 14.3    // Pluto's mean longitude adjusted for Feb 2025
         };
 
         // Longitude of ascending node (degrees)
@@ -925,7 +856,8 @@
             jupiter: 100.464,
             saturn: 113.665,
             uranus: 74.006,
-            neptune: 131.784
+            neptune: 131.784,
+            pluto: 110.299    // Pluto's ascending node
         };
 
         // Argument of perihelion (degrees)
@@ -937,7 +869,8 @@
             jupiter: 14.331,
             saturn: 92.432,
             uranus: 170.964,
-            neptune: 44.971
+            neptune: 44.971,
+            pluto: 113.834    // Pluto's argument of perihelion
         };
 
         // Orbital eccentricities
@@ -949,7 +882,8 @@
             jupiter: 0.048,
             saturn: 0.054,
             uranus: 0.047,
-            neptune: 0.009
+            neptune: 0.009,
+            pluto: 0.248    // Pluto's eccentricity
         };
 
         // Orbital inclination to ecliptic (degrees)
@@ -961,11 +895,28 @@
             jupiter: 1.3,
             saturn: 2.5,
             uranus: 0.8,
-            neptune: 1.8
+            neptune: 1.8,
+            pluto: 17.2    // Pluto's inclination
+        };
+
+        // Store last known good positions
+        const lastKnownPositions = {
+            mercury: null,
+            venus: null,
+            earth: null,
+            mars: null,
+            jupiter: null,
+            saturn: null,
+            uranus: null,
+            neptune: null,
+            pluto: null
         };
 
         // Reference epoch (J2000.0): January 1, 2000, 12:00 UTC
         const J2000 = new Date('2000-01-01T12:00:00Z');
+
+        // Change the UPDATE_INTERVAL to 5 seconds
+        const UPDATE_INTERVAL = 5000;
 
         function calculateKeplerEquation(meanAnomaly, eccentricity) {
             const M = meanAnomaly * Math.PI / 180;
@@ -1038,467 +989,478 @@
             }
         }
 
-        // Add satellite IDs for Horizons API
-        const SATELLITE_IDS = {
-            moon: '301',    // Earth's Moon
-            io: '501',      // Jupiter's Io
-            europa: '502',  // Jupiter's Europa
-            ganymede: '503',// Jupiter's Ganymede
-            callisto: '504',// Jupiter's Callisto
-            titan: '606'    // Saturn's Titan
+        // Add asteroid IDs for NASA Horizons
+        const ASTEROID_IDS = {
+            ceres: '1',      // Ceres
+            vesta: '4',      // Vesta
+            pallas: '2',     // Pallas
+            hygiea: '10',    // Hygiea
+            interamnia: '704',  // Interamnia
+            europa: '52',    // Europa (asteroid)
+            davida: '511',   // Davida
+            sylvia: '87',    // Sylvia
+            cybele: '65',    // Cybele
+            eunomia: '15'    // Eunomia
         };
 
-        // Orbital periods for satellites (in Earth days)
-        const SATELLITE_PERIODS = {
-            moon: 27.32,    // Moon's sidereal period
-            io: 1.77,       // Io's orbital period
-            europa: 3.55,   // Europa's orbital period
-            ganymede: 7.15, // Ganymede's orbital period
-            callisto: 16.69,// Callisto's orbital period
-            titan: 15.95    // Titan's orbital period
+        // Asteroid orbital periods (days)
+        const asteroidOrbitalPeriods = {
+            ceres: 1681.63,      // Ceres
+            vesta: 1325.75,      // Vesta
+            pallas: 1685.93,     // Pallas
+            hygiea: 2041.26,     // Hygiea
+            interamnia: 1950.57,  // Interamnia
+            europa: 2020.88,     // Europa
+            davida: 2001.75,     // Davida
+            sylvia: 2381.64,     // Sylvia
+            cybele: 2205.34,     // Cybele
+            eunomia: 1570.89     // Eunomia
         };
 
-        async function updateSatellitePositions() {
-            const now = new Date();
-            
-            // Update Moon position relative to Earth
-            const moonContainer = document.getElementById('moon-container');
-            const moonAngle = (now - J2000) / (SATELLITE_PERIODS.moon * 24 * 60 * 60 * 1000) * 360;
-            moonContainer.style.transform = `rotate(${moonAngle}deg) translateX(25px)`;
+        // Asteroid mean longitudes for Feb 2025
+        const asteroidMeanLongitudeJ2000 = {
+            ceres: 132.5,
+            vesta: 103.8,
+            pallas: 285.2,
+            hygiea: 15.7,
+            interamnia: 195.3,
+            europa: 45.9,
+            davida: 298.4,
+            sylvia: 167.2,
+            cybele: 88.6,
+            eunomia: 222.1
+        };
 
-            // Update Jupiter's moons
-            const jupiterMoons = ['io', 'europa', 'ganymede', 'callisto'];
-            jupiterMoons.forEach((moon, index) => {
-                const container = document.getElementById(`${moon}-container`);
-                const angle = (now - J2000) / (SATELLITE_PERIODS[moon] * 24 * 60 * 60 * 1000) * 360;
-                const distance = 40 + (index + 1) * 15; // Increased distances for better visibility
-                container.style.transform = `rotate(${angle}deg) translateX(${distance}px)`;
+        // Asteroid orbit widths (in pixels, between Mars and Jupiter)
+        const asteroidOrbitWidths = {
+            ceres: 520,
+            vesta: 480,
+            pallas: 500,
+            hygiea: 560,
+            interamnia: 540,
+            europa: 550,
+            davida: 545,
+            sylvia: 580,
+            cybele: 570,
+            eunomia: 490
+        };
+
+        // Add comet IDs for NASA Horizons
+        const COMET_IDS = {
+            halley: 'DES=1P',        // Halley
+            'hale-bopp': 'DES=C/1995 O1',  // Hale-Bopp
+            encke: 'DES=2P',         // Encke
+            tempel1: 'DES=9P',       // Tempel 1
+            wild2: 'DES=81P',        // Wild 2
+            churyumov: 'DES=67P',    // Churyumov-Gerasimenko
+            'swift-tuttle': 'DES=109P', // Swift-Tuttle
+            borrelly: 'DES=19P',     // Borrelly
+            giacobini: 'DES=21P',    // Giacobini-Zinner
+            hartley2: 'DES=103P'     // Hartley 2
+        };
+
+        // Comet orbital periods (years)
+        const cometOrbitalPeriods = {
+            halley: 75.32,           // Halley
+            'hale-bopp': 2537,       // Hale-Bopp
+            encke: 3.3,              // Encke
+            tempel1: 5.5,            // Tempel 1
+            wild2: 6.39,             // Wild 2
+            churyumov: 6.45,         // Churyumov-Gerasimenko
+            'swift-tuttle': 133.28,  // Swift-Tuttle
+            borrelly: 6.86,          // Borrelly
+            giacobini: 6.62,         // Giacobini-Zinner
+            hartley2: 6.46           // Hartley 2
+        };
+
+        // Convert orbital periods to days
+        const cometOrbitalPeriodsInDays = Object.fromEntries(
+            Object.entries(cometOrbitalPeriods).map(([key, value]) => [key, value * 365.25])
+        );
+
+        // Comet mean longitudes for Feb 2025
+        const cometMeanLongitudeJ2000 = {
+            halley: 180.5,
+            'hale-bopp': 45.2,
+            encke: 265.8,
+            tempel1: 125.4,
+            wild2: 315.7,
+            churyumov: 195.3,
+            'swift-tuttle': 85.9,
+            borrelly: 275.6,
+            giacobini: 155.2,
+            hartley2: 235.8
+        };
+
+        // Comet orbit widths (in pixels, various elliptical orbits)
+        const cometOrbitWidths = {
+            halley: 1200,            // Highly elliptical orbit
+            'hale-bopp': 1600,       // Very long orbit
+            encke: 400,              // Short-period orbit
+            tempel1: 600,
+            wild2: 700,
+            churyumov: 750,
+            'swift-tuttle': 1000,
+            borrelly: 800,
+            giacobini: 850,
+            hartley2: 650
+        };
+
+        // Add grid generation function
+        function createGrid() {
+            const gridContainer = document.querySelector('.grid-container');
+            const gridSize = 100; // Space between grid lines in pixels
+            const numLines = 14; // Number of lines in each direction
+
+            // Create grid for each plane
+            const planes = ['xy', 'xz', 'yz'];
+            planes.forEach((plane, index) => {
+                const grid = document.createElement('div');
+                grid.className = `grid grid-${plane}`;
+                
+                // Create lines
+                for (let i = 0; i <= numLines; i++) {
+                    // X lines
+                    const xLine = document.createElement('div');
+                    xLine.className = 'grid-line grid-x';
+                    xLine.style.left = `${i * gridSize}px`;
+                    grid.appendChild(xLine);
+
+                    // Y lines
+                    const yLine = document.createElement('div');
+                    yLine.className = 'grid-line grid-y';
+                    yLine.style.top = `${i * gridSize}px`;
+                    grid.appendChild(yLine);
+
+                    // Z lines (connecting points)
+                    if (plane === 'xy') {
+                        const zLine = document.createElement('div');
+                        zLine.className = 'grid-line grid-z';
+                        zLine.style.left = `${i * gridSize}px`;
+                        zLine.style.top = `${i * gridSize}px`;
+                        zLine.style.transform = `translateZ(${-500}px)`;
+                        grid.appendChild(zLine);
+                    }
+                }
+
+                // Position the grid plane
+                switch(plane) {
+                    case 'xy':
+                        grid.style.transform = 'translateZ(-500px)';
+                        break;
+                    case 'xz':
+                        grid.style.transform = 'rotateX(90deg) translateZ(-500px)';
+                        break;
+                    case 'yz':
+                        grid.style.transform = 'rotateY(90deg) translateZ(-700px)';
+                        break;
+                }
+
+                gridContainer.appendChild(grid);
             });
 
-            // Update Titan position relative to Saturn
-            const titanContainer = document.getElementById('titan-container');
-            const titanAngle = (now - J2000) / (SATELLITE_PERIODS.titan * 24 * 60 * 60 * 1000) * 360;
-            titanContainer.style.transform = `rotate(${titanAngle}deg) translateX(55px)`;
-        }
-
-        // NASA Horizons IDs for asteroids
-        const ASTEROID_IDS = {
-            ceres: '1',        // 1 Ceres
-            pallas: '2',       // 2 Pallas
-            juno: '3',         // 3 Juno
-            vesta: '4',        // 4 Vesta
-            hygiea: '10',      // 10 Hygiea
-            euphrosyne: '31',  // 31 Euphrosyne
-            cybele: '65',      // 65 Cybele
-            psyche: '16',      // 16 Psyche
-            europa: '52',      // 52 Europa (asteroid)
-            eunomia: '15'      // 15 Eunomia
-        };
-
-        // NASA Horizons IDs for comets
-        const COMET_IDS = {
-            halley: '1P',          // 1P/Halley
-            encke: '2P',           // 2P/Encke
-            tempel1: '9P',         // 9P/Tempel 1
-            wild2: '81P',          // 81P/Wild 2
-            churyumov: '67P',      // 67P/Churyumov-Gerasimenko
-            hale_bopp: 'C/1995 O1',// C/1995 O1 (Hale-Bopp)
-            hyakutake: 'C/1996 B2',// C/1996 B2 (Hyakutake)
-            mcnaught: 'C/2006 P1', // C/2006 P1 (McNaught)
-            lovejoy: 'C/2011 W3',  // C/2011 W3 (Lovejoy)
-            neowise: 'C/2020 F3'   // C/2020 F3 (NEOWISE)
-        };
-
-        // Orbital periods for asteroids (in Earth days)
-        const ASTEROID_PERIODS = {
-            ceres: 1681.63,
-            pallas: 1685.93,
-            juno: 1593.93,
-            vesta: 1325.75,
-            hygiea: 2041.26,
-            euphrosyne: 2043.89,
-            cybele: 2198.23,
-            psyche: 1825.82,
-            europa: 2025.57,
-            eunomia: 1570.89
-        };
-
-        // Orbital periods for comets (in Earth days)
-        const COMET_PERIODS = {
-            halley: 27537.5,
-            encke: 1204.02,
-            tempel1: 1377.86,
-            wild2: 2454.37,
-            churyumov: 2380.57,
-            hale_bopp: 2537.07,
-            hyakutake: 17000,
-            mcnaught: 92600,
-            lovejoy: 622000,
-            neowise: 6766
-        };
-
-        async function updateObjectPosition(objectId, objectType, data) {
-            const container = document.getElementById(`${objectId}-container`);
-            if (!container) {
-                console.warn(`Container not found for ${objectId}`);
-                return;
-            }
-
-            try {
-                const now = new Date();
-                let angle;
+            // Add axis labels
+            const labels = ['X', 'Y', 'Z'];
+            labels.forEach((label, index) => {
+                const axisLabel = document.createElement('div');
+                axisLabel.className = 'axis-label';
+                axisLabel.textContent = label;
                 
-                // Calculate angle based on object type
-                if (objectType === 'planet') {
-                    const apiData = await fetchPlanetPosition(PLANET_IDS[objectId], now);
-                    console.log(`API response for ${objectId}:`, apiData);
-                    
-                    if (apiData.success && apiData.position) {
-                        const { x, y, z } = apiData.position;
-                        angle = Math.atan2(y, x) * 180 / Math.PI;
-                        console.log(`API position angle for ${objectId}: ${angle} degrees`);
-                    } else {
-                        // Fallback to orbital calculation
-                        const daysSinceJ2000 = (now - J2000) / (1000 * 60 * 60 * 24);
-                        const period = orbitalPeriods[objectId];
-                        const meanMotion = 360 / period;
-                        angle = (meanMotion * daysSinceJ2000 + meanLongitudeJ2000[objectId]) % 360;
-                        console.log(`Fallback position angle for ${objectId}: ${angle} degrees`);
-                    }
-                } else {
-                    // Calculate position for non-planet objects
-                    const daysSinceJ2000 = (now - J2000) / (1000 * 60 * 60 * 24);
-                    const period = objectType === 'asteroid' ? ASTEROID_PERIODS[objectId] : COMET_PERIODS[objectId];
-                    const meanMotion = 360 / period;
-                    angle = (meanMotion * daysSinceJ2000) % 360;
-                }
-
-                // Get the orbit element and its radius
-                const orbit = document.getElementById(`${objectId}-orbit`);
-                const orbitRadius = parseInt(orbit?.style.width || orbit?.offsetWidth) / 2;
-                
-                // Apply the position with adjusted transform
-                container.style.transform = `rotate(${angle}deg) translateX(${orbitRadius}px)`;
-                
-                // Calculate dynamic z-index based on position
-                const baseZIndex = objectType === 'planet' ? 100 : (objectType === 'asteroid' ? 200 : 300);
-                const dynamicZIndex = baseZIndex + Math.floor((angle + 180) % 360);
-                container.style.zIndex = dynamicZIndex;
-                
-                // Update object rotation and ensure visibility
-                const object = container.querySelector(`.${objectType}`);
-                if (object) {
-                    // Rotate object to face the viewer
-                    object.style.transform = `translate(-50%, -50%) rotateY(${-angle}deg)`;
-                    object.style.display = 'block';
-                    object.style.visibility = 'visible';
-                    
-                    // Ensure proper z-index inheritance
-                    object.style.zIndex = dynamicZIndex;
-                    
-                    // Update name label position
-                    const nameLabel = object.querySelector(`.${objectType}-name`);
-                    if (nameLabel) {
-                        nameLabel.style.zIndex = dynamicZIndex + 1;
-                    }
-                    
-                    // Update comet tail if applicable
-                    if (objectType === 'comet') {
-                        const tail = object.querySelector('.comet-tail');
-                        if (tail) {
-                            tail.style.transform = `rotate(${180 - angle}deg)`;
-                        }
-                    }
+                switch(label) {
+                    case 'X':
+                        axisLabel.style.right = '10px';
+                        axisLabel.style.bottom = '50%';
+                        break;
+                    case 'Y':
+                        axisLabel.style.bottom = '10px';
+                        axisLabel.style.left = '50%';
+                        break;
+                    case 'Z':
+                        axisLabel.style.top = '10px';
+                        axisLabel.style.left = '50%';
+                        break;
                 }
                 
-            } catch (error) {
-                console.error(`Failed to update ${objectId} position:`, error);
-            }
+                gridContainer.appendChild(axisLabel);
+            });
         }
 
+        // Update the updatePlanetPositions function to include all celestial bodies
         async function updatePlanetPositions() {
             const now = new Date();
             document.getElementById('current-date').textContent = now.toLocaleDateString();
             document.getElementById('current-time').textContent = now.toLocaleTimeString();
 
-            // Update all planets (including Pluto)
+            // Update all celestial bodies
             const planets = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
+            const asteroids = ['ceres', 'vesta', 'pallas', 'hygiea', 'interamnia', 'europa', 'davida', 'sylvia', 'cybele', 'eunomia'];
+            const comets = ['halley', 'hale-bopp', 'encke', 'tempel1', 'wild2', 'churyumov', 'swift-tuttle', 'borrelly', 'giacobini', 'hartley2'];
+            
+            // Update planets
             for (const planet of planets) {
-                await updateObjectPosition(planet, 'planet');
-                
-                // Force visibility after position update
-                const container = document.getElementById(`${planet}-container`);
-                const planetElement = document.getElementById(planet);
-                if (container && planetElement) {
-                    container.style.display = 'block';
-                    container.style.visibility = 'visible';
-                    planetElement.style.display = 'block';
-                    planetElement.style.visibility = 'visible';
+                try {
+                    // Calculate initial position using orbital periods
+                    const daysSinceJ2000 = (now - J2000) / (1000 * 60 * 60 * 24);
+                    const period = orbitalPeriods[planet];
+                    const meanMotion = 360 / period;
+                    let angle = (meanMotion * daysSinceJ2000 + meanLongitudeJ2000[planet]) % 360;
+                    
+                    // Try to get new position data from NASA
+                    const apiData = await fetchPlanetPosition(PLANET_IDS[planet], now);
+                    
+                    if (apiData.success && apiData.position) {
+                        // Calculate angle from API position data
+                        const { x, y } = apiData.position;
+                        angle = Math.atan2(y, x) * 180 / Math.PI;
+                        lastKnownPositions[planet] = angle;
+                    } else {
+                        // Store calculated position
+                        lastKnownPositions[planet] = angle;
+                    }
+
+                    const container = document.getElementById(`${planet}-container`);
+                    const planetElement = document.getElementById(planet);
+                    const orbit = document.getElementById(`${planet}-orbit`);
+                    
+                    if (container && planetElement && orbit) {
+                        // Get orbit radius
+                        const orbitRadius = parseInt(orbit.style.width || orbit.offsetWidth) / 2;
+                        
+                        // Calculate position
+                        const angleRad = angle * Math.PI / 180;
+                        const x = orbitRadius * Math.cos(angleRad);
+                        const y = orbitRadius * Math.sin(angleRad);
+                        
+                        // Apply position
+                        container.style.transform = `translate(${x}px, ${y}px)`;
+                        
+                        // Ensure visibility
+                        container.style.display = 'block';
+                        container.style.visibility = 'visible';
+                        planetElement.style.display = 'block';
+                        planetElement.style.visibility = 'visible';
+                        planetElement.style.opacity = '1';
+                        
+                        // Update z-index based on y position for proper layering
+                        const zIndex = Math.floor(1000 + y);
+                        container.style.zIndex = zIndex;
+                        planetElement.style.zIndex = zIndex;
+
+                        // Force planet dimensions
+                        const size = planet === 'jupiter' ? 40 : 
+                                   planet === 'saturn' ? 35 :
+                                   planet === 'uranus' ? 26 :
+                                   planet === 'neptune' ? 25 :
+                                   planet === 'earth' ? 20 :
+                                   planet === 'venus' ? 18 :
+                                   planet === 'mars' ? 16 : 12;
+                        
+                        planetElement.style.width = `${size}px`;
+                        planetElement.style.height = `${size}px`;
+                        
+                        // Update Saturn's rings if applicable
+                        if (planet === 'saturn') {
+                            const rings = planetElement.querySelector('.saturn-rings');
+                            if (rings) {
+                                rings.style.display = 'block';
+                                rings.style.visibility = 'visible';
+                                rings.style.zIndex = zIndex - 1;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error updating ${planet} position:`, error);
+                    // Use last known position if available
+                    if (lastKnownPositions[planet] !== null) {
+                        const angle = lastKnownPositions[planet];
+                        const container = document.getElementById(`${planet}-container`);
+                        const planetElement = document.getElementById(planet);
+                        const orbit = document.getElementById(`${planet}-orbit`);
+                        
+                        if (container && planetElement && orbit) {
+                            const orbitRadius = parseInt(orbit.style.width || orbit.offsetWidth) / 2;
+                            const angleRad = angle * Math.PI / 180;
+                            const x = orbitRadius * Math.cos(angleRad);
+                            const y = orbitRadius * Math.sin(angleRad);
+                            container.style.transform = `translate(${x}px, ${y}px)`;
+                            planetElement.style.display = 'block';
+                            planetElement.style.visibility = 'visible';
+                            planetElement.style.opacity = '1';
+                        }
+                    }
                 }
             }
 
-            // Update asteroids with corrected positioning
-            const asteroids = [
-                'ceres',
-                'pallas',
-                'juno',
-                'vesta',
-                'hygiea',
-                'euphrosyne',
-                'cybele',
-                'psyche',
-                'europa-asteroid',  // Renamed to avoid confusion with Jupiter's moon
-                'eunomia'
-            ];
-
+            // Update asteroids
             for (const asteroid of asteroids) {
-                await updateObjectPosition(asteroid, 'asteroid');
-                
-                // Ensure asteroid is visible
-                const container = document.getElementById(`${asteroid}-container`);
-                const asteroidElement = document.getElementById(asteroid);
-                if (container && asteroidElement) {
-                    container.style.display = 'block';
-                    container.style.visibility = 'visible';
-                    asteroidElement.style.display = 'block';
-                    asteroidElement.style.visibility = 'visible';
+                try {
+                    // Set orbit sizes
+                    const orbit = document.getElementById(`${asteroid}-orbit`);
+                    if (orbit) {
+                        orbit.style.width = `${asteroidOrbitWidths[asteroid]}px`;
+                        orbit.style.height = `${asteroidOrbitWidths[asteroid]}px`;
+                    }
+
+                    // Calculate position
+                    const daysSinceJ2000 = (now - J2000) / (1000 * 60 * 60 * 24);
+                    const period = asteroidOrbitalPeriods[asteroid];
+                    const meanMotion = 360 / period;
+                    let angle = (meanMotion * daysSinceJ2000 + asteroidMeanLongitudeJ2000[asteroid]) % 360;
+
+                    // Try to get position from NASA Horizons
+                    const apiData = await fetchPlanetPosition(ASTEROID_IDS[asteroid], now);
+                    
+                    if (apiData.success && apiData.position) {
+                        const { x, y } = apiData.position;
+                        angle = Math.atan2(y, x) * 180 / Math.PI;
+                    }
+
+                    const container = document.getElementById(`${asteroid}-container`);
+                    const asteroidElement = document.getElementById(asteroid);
+                    
+                    if (container && asteroidElement && orbit) {
+                        const orbitRadius = parseInt(orbit.style.width) / 2;
+                        const angleRad = angle * Math.PI / 180;
+                        const x = orbitRadius * Math.cos(angleRad);
+                        const y = orbitRadius * Math.sin(angleRad);
+                        
+                        container.style.transform = `translate(${x}px, ${y}px)`;
+                        container.style.display = 'block';
+                        container.style.visibility = 'visible';
+                        
+                        asteroidElement.style.display = 'block';
+                        asteroidElement.style.visibility = 'visible';
+                        asteroidElement.style.opacity = '1';
+                        
+                        const zIndex = Math.floor(1000 + y);
+                        container.style.zIndex = zIndex;
+                        asteroidElement.style.zIndex = zIndex;
+                    }
+                } catch (error) {
+                    console.error(`Error updating ${asteroid} position:`, error);
                 }
             }
 
             // Update comets
-            for (const [comet, id] of Object.entries(COMET_IDS)) {
-                const cometId = comet.replace('_', '-');
-                await updateObjectPosition(cometId, 'comet');
-                
-                // Ensure comet is visible
-                const container = document.getElementById(`${cometId}-container`);
-                const cometElement = document.getElementById(cometId);
-                if (container && cometElement) {
-                    container.style.display = 'block';
-                    container.style.visibility = 'visible';
-                    cometElement.style.display = 'block';
-                    cometElement.style.visibility = 'visible';
+            for (const comet of comets) {
+                try {
+                    // Set orbit sizes
+                    const orbit = document.getElementById(`${comet}-orbit`);
+                    if (orbit) {
+                        orbit.style.width = `${cometOrbitWidths[comet]}px`;
+                        orbit.style.height = `${cometOrbitWidths[comet]}px`;
+                    }
+
+                    // Calculate position
+                    const daysSinceJ2000 = (now - J2000) / (1000 * 60 * 60 * 24);
+                    const period = cometOrbitalPeriodsInDays[comet];
+                    const meanMotion = 360 / period;
+                    let angle = (meanMotion * daysSinceJ2000 + cometMeanLongitudeJ2000[comet]) % 360;
+
+                    // Try to get position from NASA Horizons
+                    const apiData = await fetchPlanetPosition(COMET_IDS[comet], now);
+                    
+                    if (apiData.success && apiData.position) {
+                        const { x, y } = apiData.position;
+                        angle = Math.atan2(y, x) * 180 / Math.PI;
+                    }
+
+                    const container = document.getElementById(`${comet}-container`);
+                    const cometElement = document.getElementById(comet);
+                    const cometTail = cometElement?.querySelector('.comet-tail');
+                    
+                    if (container && cometElement && orbit) {
+                        const orbitRadius = parseInt(orbit.style.width) / 2;
+                        const angleRad = angle * Math.PI / 180;
+                        const x = orbitRadius * Math.cos(angleRad);
+                        const y = orbitRadius * Math.sin(angleRad);
+                        
+                        container.style.transform = `translate(${x}px, ${y}px)`;
+                        container.style.display = 'block';
+                        container.style.visibility = 'visible';
+                        
+                        cometElement.style.display = 'block';
+                        cometElement.style.visibility = 'visible';
+                        cometElement.style.opacity = '1';
+                        
+                        // Update comet tail direction (always pointing away from the sun)
+                        if (cometTail) {
+                            const tailAngle = Math.atan2(y, x) * 180 / Math.PI + 180;
+                            cometTail.style.transform = `rotate(${tailAngle}deg)`;
+                        }
+                        
+                        const zIndex = Math.floor(1000 + y);
+                        container.style.zIndex = zIndex;
+                        cometElement.style.zIndex = zIndex;
+                    }
+                } catch (error) {
+                    console.error(`Error updating ${comet} position:`, error);
                 }
             }
 
-            // Update satellites
-            await updateSatellitePositions();
-
-            // Add verification check
-            verifyObjectPositions();
-
             // Schedule next update
-            setTimeout(updatePlanetPositions, 60000);
+            setTimeout(updatePlanetPositions, UPDATE_INTERVAL);
         }
 
-        // Ensure proper initialization
-        document.addEventListener('DOMContentLoaded', () => {
+        // Modify the initialization
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Create 3D grid
+            createGrid();
+            
             // Force initial visibility of all objects
-            const allObjects = document.querySelectorAll('.planet, .asteroid, .comet');
+            const allObjects = document.querySelectorAll('.planet');
             allObjects.forEach(obj => {
                 obj.style.display = 'block';
                 obj.style.visibility = 'visible';
-            });
-
-            const allContainers = document.querySelectorAll('.planet-container, .asteroid-container, .comet-container');
-            allContainers.forEach(container => {
-                container.style.display = 'block';
-                container.style.visibility = 'visible';
-            });
-
-            updatePlanetPositions();
-        });
-
-        // Add verification system
-        function verifyObjectPositions() {
-            const verificationResults = {
-                planets: {},
-                asteroids: {},
-                comets: {},
-                satellites: {}
-            };
-
-            // Verify planets
-            const planets = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
-            planets.forEach(planet => {
-                const container = document.getElementById(`${planet}-container`);
-                const planetElement = document.getElementById(planet);
-                const nameElement = planetElement?.querySelector('.planet-name');
-                const orbit = document.getElementById(`${planet}-orbit`);
-
-                verificationResults.planets[planet] = {
-                    containerVisible: container?.style.display !== 'none' && container?.style.visibility !== 'hidden',
-                    elementVisible: planetElement?.style.display !== 'none' && planetElement?.style.visibility !== 'hidden',
-                    nameVisible: nameElement?.style.display !== 'none' && nameElement?.style.visibility !== 'hidden',
-                    position: container?.style.transform || 'Not positioned',
-                    zIndex: container?.style.zIndex || 'No z-index'
-                };
-            });
-
-            // Verify asteroids
-            const asteroids = ['ceres', 'pallas', 'juno', 'vesta', 'hygiea', 'euphrosyne', 'cybele', 'psyche', 'europa-asteroid', 'eunomia'];
-            asteroids.forEach(asteroid => {
-                const container = document.getElementById(`${asteroid}-container`);
-                const asteroidElement = document.getElementById(asteroid);
-                const nameElement = asteroidElement?.querySelector('.asteroid-name');
-
-                verificationResults.asteroids[asteroid] = {
-                    containerVisible: container?.style.display !== 'none' && container?.style.visibility !== 'hidden',
-                    elementVisible: asteroidElement?.style.display !== 'none' && asteroidElement?.style.visibility !== 'hidden',
-                    nameVisible: nameElement?.style.display !== 'none' && nameElement?.style.visibility !== 'hidden',
-                    position: container?.style.transform || 'Not positioned',
-                    zIndex: container?.style.zIndex || 'No z-index'
-                };
-            });
-
-            // Verify comets
-            const comets = ['halley', 'encke', 'tempel1', 'wild2', 'churyumov', 'hale-bopp', 'hyakutake', 'mcnaught', 'lovejoy', 'neowise'];
-            comets.forEach(comet => {
-                const container = document.getElementById(`${comet}-container`);
-                const cometElement = document.getElementById(comet);
-                const nameElement = cometElement?.querySelector('.comet-name');
-                const tailElement = cometElement?.querySelector('.comet-tail');
-
-                verificationResults.comets[comet] = {
-                    containerVisible: container?.style.display !== 'none' && container?.style.visibility !== 'hidden',
-                    elementVisible: cometElement?.style.display !== 'none' && cometElement?.style.visibility !== 'hidden',
-                    nameVisible: nameElement?.style.display !== 'none' && nameElement?.style.visibility !== 'hidden',
-                    tailVisible: tailElement?.style.display !== 'none' && tailElement?.style.visibility !== 'hidden',
-                    position: container?.style.transform || 'Not positioned',
-                    zIndex: container?.style.zIndex || 'No z-index'
-                };
-            });
-
-            // Verify satellites
-            const satellites = {
-                earth: ['moon'],
-                jupiter: ['io', 'europa', 'ganymede', 'callisto'],
-                saturn: ['titan']
-            };
-
-            Object.entries(satellites).forEach(([planet, moons]) => {
-                moons.forEach(moon => {
-                    const container = document.getElementById(`${moon}-container`);
-                    const moonElement = document.getElementById(moon);
-                    const nameElement = moonElement?.querySelector('.satellite-name');
-
-                    verificationResults.satellites[moon] = {
-                        containerVisible: container?.style.display !== 'none' && container?.style.visibility !== 'hidden',
-                        elementVisible: moonElement?.style.display !== 'none' && moonElement?.style.visibility !== 'hidden',
-                        nameVisible: nameElement?.style.display !== 'none' && nameElement?.style.visibility !== 'hidden',
-                        position: container?.style.transform || 'Not positioned',
-                        zIndex: container?.style.zIndex || 'No z-index',
-                        parentPlanet: planet
-                    };
+                obj.style.opacity = '1';
+                
+                // Ensure proper dimensions
+                if (!obj.style.width || !obj.style.height) {
+                    const planetId = obj.id;
+                    if (planetId === 'jupiter') {
+                        obj.style.width = '40px';
+                        obj.style.height = '40px';
+                    } else if (planetId === 'saturn') {
+                        obj.style.width = '35px';
+                        obj.style.height = '35px';
+                    } else {
+                        obj.style.width = '20px';
+                        obj.style.height = '20px';
+                    }
+                }
+                
+                // Log initial state
+                console.log(`Initial state for ${obj.id}:`, {
+                    display: obj.style.display,
+                    visibility: obj.style.visibility,
+                    opacity: obj.style.opacity,
+                    width: obj.style.width,
+                    height: obj.style.height,
+                    transform: obj.style.transform
                 });
             });
 
-            // Verify relative positions
-            verificationResults.relativePositions = verifyRelativePositions();
-
-            // Create verification report
-            displayVerificationReport(verificationResults);
-        }
-
-        function verifyRelativePositions() {
-            const positions = {};
-            const planets = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
-            
-            planets.forEach(planet => {
-                const container = document.getElementById(`${planet}-container`);
-                if (container) {
-                    const transform = container.style.transform;
-                    const angle = transform ? parseFloat(transform.match(/rotate\(([-\d.]+)deg\)/)?.[1]) : null;
-                    positions[planet] = angle;
-                }
-            });
-
-            const relativePositions = {};
-            
-            // Check each planet's position relative to its neighbors
-            planets.forEach((planet, index) => {
-                const prevPlanet = planets[index - 1];
-                const nextPlanet = planets[index + 1];
+            const allContainers = document.querySelectorAll('.planet-container');
+            allContainers.forEach(container => {
+                container.style.display = 'block';
+                container.style.visibility = 'visible';
+                container.style.transformOrigin = '50% 50%';
+                container.style.width = '0';
+                container.style.height = '0';
                 
-                relativePositions[planet] = {
-                    angle: positions[planet],
-                    relativeToInner: prevPlanet ? {
-                        planet: prevPlanet,
-                        angleDifference: ((positions[planet] - positions[prevPlanet] + 360) % 360)
-                    } : null,
-                    relativeToOuter: nextPlanet ? {
-                        planet: nextPlanet,
-                        angleDifference: ((positions[nextPlanet] - positions[planet] + 360) % 360)
-                    } : null
-                };
+                // Log initial state
+                console.log(`Initial state for container ${container.id}:`, {
+                    display: container.style.display,
+                    visibility: container.style.visibility,
+                    transformOrigin: container.style.transformOrigin,
+                    width: container.style.width,
+                    height: container.style.height
+                });
             });
 
-            return relativePositions;
-        }
-
-        function displayVerificationReport(results) {
-            // Create or update verification report container
-            let reportContainer = document.getElementById('verification-report');
-            if (!reportContainer) {
-                reportContainer = document.createElement('div');
-                reportContainer.id = 'verification-report';
-                reportContainer.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    max-width: 400px;
-                    max-height: 80vh;
-                    overflow-y: auto;
-                    background: rgba(0, 0, 0, 0.8);
-                    color: white;
-                    padding: 15px;
-                    border-radius: 5px;
-                    font-family: monospace;
-                    font-size: 12px;
-                    z-index: 1000;
-                `;
-                document.body.appendChild(reportContainer);
-            }
-
-            // Generate report HTML
-            let reportHTML = '<h3>🔍 Verification Report</h3>';
-            
-            // Add timestamp
-            reportHTML += `<p>Last updated: ${new Date().toLocaleTimeString()}</p>`;
-
-            // Planet verification
-            reportHTML += '<h4>🌍 Planets</h4>';
-            Object.entries(results.planets).forEach(([planet, data]) => {
-                const status = data.containerVisible && data.elementVisible && data.nameVisible ? '✅' : '❌';
-                reportHTML += `<details>
-                    <summary>${status} ${planet.charAt(0).toUpperCase() + planet.slice(1)}</summary>
-                    <ul>
-                        <li>Container: ${data.containerVisible ? '✅' : '❌'}</li>
-                        <li>Element: ${data.elementVisible ? '✅' : '❌'}</li>
-                        <li>Name Label: ${data.nameVisible ? '✅' : '❌'}</li>
-                        <li>Position: ${data.position}</li>
-                        <li>Z-Index: ${data.zIndex}</li>
-                    </ul>
-                </details>`;
-            });
-
-            // Relative positions
-            reportHTML += '<h4>📏 Relative Positions</h4>';
-            Object.entries(results.relativePositions).forEach(([planet, data]) => {
-                reportHTML += `<details>
-                    <summary>${planet.charAt(0).toUpperCase() + planet.slice(1)} (${Math.round(data.angle)}°)</summary>`;
-                if (data.relativeToInner) {
-                    reportHTML += `<p>Angle to ${data.relativeToInner.planet}: ${Math.round(data.relativeToInner.angleDifference)}°</p>`;
-                }
-                if (data.relativeToOuter) {
-                    reportHTML += `<p>Angle to ${data.relativeToOuter.planet}: ${Math.round(data.relativeToOuter.angleDifference)}°</p>`;
-                }
-                reportHTML += '</details>';
-            });
-
-            // Update report content
-            reportContainer.innerHTML = reportHTML;
-        }
+            // Start updating planet positions
+            await updatePlanetPositions();
+        });
     </script>
 </body>
 </html> 
